@@ -104,9 +104,14 @@ footer{border-top:1px solid var(--glass-border);padding:2.5rem 0;font-size:.85re
 .foot-inner{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:center}
 .foot-links{display:flex;gap:1.5rem}
 .foot-links a:hover{color:var(--ink)}
-/* BTC BOX */
-.btc-box{display:flex;align-items:center;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;padding:.9rem 1.2rem;border-radius:.9rem;background:rgba(3,36,46,.55);border:1px solid var(--glass-border)}
-.btc-box code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;color:var(--silver);word-break:break-all;text-align:left}
+/* DONATE CARDS */
+.donate-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.2rem}
+@media(max-width:680px){.donate-grid{grid-template-columns:1fr}}
+.donate-card{display:flex;flex-direction:column;align-items:flex-start;gap:.45rem;padding:1.1rem 1.25rem;border-radius:1rem;background:rgba(3,36,46,.55);border:1px solid var(--glass-border);text-align:left}
+.coin-label{font-family:'Space Grotesk';font-weight:700;font-size:1.05rem}
+.coin-net{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim)}
+.coin-addr{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem;color:var(--silver);word-break:break-all;line-height:1.5}
+.donate-card .btn{align-self:flex-start}
 /* TIMETABLE */
 .timetable{display:grid;gap:.5rem;background:var(--glass);border:1px solid var(--glass-border);border-radius:1.5rem;padding:1.5rem;backdrop-filter:blur(12px)}
 .tt-row{display:grid;grid-template-columns:1.6fr .8fr .8fr 1fr 1.6fr;gap:.75rem;align-items:center;padding:.7rem 1rem;border-radius:.75rem;font-size:.92rem}
@@ -350,10 +355,20 @@ footer{border-top:1px solid var(--glass-border);padding:2.5rem 0;font-size:.85re
   <div class="newsletter reveal">
     <h2>Soutenir la révolution de la mobilité lémanique</h2>
     <p>Citoyen·ne, élu·e, ingénieur·e ou simplement curieux : le LémanLoop avance grâce aux contributors qui financent ses études techniques, ses prototypes et sa concertation publique. Un financement, même symbolique, accélère chaque étape du projet.</p>
-    <p style="font-size:.95rem;color:var(--ink-dim);margin-top:.4rem">Vous pouvez soutenir le projet en financièrement en envoyant des bitcoins à l'adresse suivante :</p>
-    <div class="btc-box">
-      <code id="btcAddr">16FH2ocBMex5a4HSiY5ErTZcVkejKGMXXm</code>
-      <button type="button" class="btn btn-ghost" id="copyBtc" style="padding:.55rem 1.2rem;font-size:.85rem">Copier</button>
+    <p style="font-size:.95rem;color:var(--ink-dim);margin-top:.4rem">Vous pouvez soutenir le projet financièrement en envoyant des bitcoins (réseau BTC) ou des ethers (réseau ETH / ERC-20) aux adresses suivantes :</p>
+    <div class="donate-grid">
+      <div class="donate-card">
+        <span class="coin-label" style="color:#F7931A">₿ Bitcoin</span>
+        <span class="coin-net">Réseau BTC uniquement</span>
+        <code class="coin-addr" id="btcAddr">16FH2ocBMex5a4HSiY5ErTZcVkejKGMXXm</code>
+        <button type="button" class="btn btn-ghost copyBtc" data-addr="btcAddr" style="padding:.45rem 1.1rem;font-size:.8rem">Copier l'adresse</button>
+      </div>
+      <div class="donate-card">
+        <span class="coin-label" style="color:#8CA3F5">Ξ Ethereum</span>
+        <span class="coin-net">Réseau ETH (ERC-20) uniquement</span>
+        <code class="coin-addr" id="ethAddr">0xce946302327334e3a3f5d31ff7f096d7f909287c</code>
+        <button type="button" class="btn btn-ghost copyBtc" data-addr="ethAddr" style="padding:.45rem 1.1rem;font-size:.8rem">Copier l'adresse</button>
+      </div>
     </div>
     <div class="nl-msg" id="nlMsg"></div>
   </div>
@@ -373,19 +388,32 @@ const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-document.getElementById('copyBtc').addEventListener('click',()=>{
-  const addr=document.getElementById('btcAddr').textContent.trim();
-  const msg=document.getElementById('nlMsg');
-  const done=()=>{msg.textContent='Adresse copiée ✓ — merci pour votre soutien.';msg.style.color='';};
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(addr).then(done).catch(()=>{fallbackCopy(addr);done();});}
-  else{fallbackCopy(addr);done();}
+document.querySelectorAll('.copyBtc').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const addr=document.getElementById(btn.dataset.addr).textContent.trim();
+    const msg=document.getElementById('nlMsg');
+    const done=()=>{msg.textContent='Adresse copiée ✓ — merci pour votre soutien.';msg.style.color='';};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(addr).then(done).catch(()=>{fallbackCopy(addr);done();});}
+    else{fallbackCopy(addr);done();}
+  });
 });
 function fallbackCopy(text){
   const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();
   try{document.execCommand('copy');}catch(e){}
   document.body.removeChild(ta);
 }
-
+// donate network warning: BTC adresses -> BTC network, ETH -> ERC-20
+document.querySelectorAll('.donate-card').forEach(card=>{
+  card.querySelector('.copyBtc').addEventListener('click',()=>{
+    const msg=document.getElementById('nlMsg');
+    const net=card.querySelector('.coin-net').textContent;
+    const warn=document.createElement('p');
+    warn.textContent='⚠️ Vérifiez le réseau avant l'+"'"+'envoi : '+net+'.';
+    warn.style.cssText='font-size:.8rem;color:#e0b25a;margin-top:.6rem';
+    card.appendChild(warn);
+    setTimeout(()=>warn.remove(),6000);
+  });
+});
 </script>
 </body>
 </html>
