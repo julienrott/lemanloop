@@ -104,6 +104,9 @@ footer{border-top:1px solid var(--glass-border);padding:2.5rem 0;font-size:.85re
 .foot-inner{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:center}
 .foot-links{display:flex;gap:1.5rem}
 .foot-links a:hover{color:var(--ink)}
+/* BTC BOX */
+.btc-box{display:flex;align-items:center;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;padding:.9rem 1.2rem;border-radius:.9rem;background:rgba(3,36,46,.55);border:1px solid var(--glass-border)}
+.btc-box code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;color:var(--silver);word-break:break-all;text-align:left}
 /* TIMETABLE */
 .timetable{display:grid;gap:.5rem;background:var(--glass);border:1px solid var(--glass-border);border-radius:1.5rem;padding:1.5rem;backdrop-filter:blur(12px)}
 .tt-row{display:grid;grid-template-columns:1.6fr .8fr .8fr 1fr 1.6fr;gap:.75rem;align-items:center;padding:.7rem 1rem;border-radius:.75rem;font-size:.92rem}
@@ -345,12 +348,13 @@ footer{border-top:1px solid var(--glass-border);padding:2.5rem 0;font-size:.85re
 
 <section id="inscription" class="final"><div class="container">
   <div class="newsletter reveal">
-    <h2>Rejoignez la révolution de la mobilité lémanique</h2>
-    <p>Citoyen·ne, élu·e, ingénieur·e ou curieux : la première boucle d'infrastructure se construit d'abord autour d'une communauté. Recevez l'avancement du projet, les études et les événements publics.</p>
-    <form class="nl-form" id="nlForm">
-      <input type="email" id="nlEmail" placeholder="prenom@exemple.ch" aria-label="Adresse email" required>
-      <button type="submit" class="btn btn-primary">S'inscrire</button>
-    </form>
+    <h2>Soutenir la révolution de la mobilité lémanique</h2>
+    <p>Citoyen·ne, élu·e, ingénieur·e ou simplement curieux : le LémanLoop avance grâce aux contributors qui financent ses études techniques, ses prototypes et sa concertation publique. Un financement, même symbolique, accélère chaque étape du projet.</p>
+    <p style="font-size:.95rem;color:var(--ink-dim);margin-top:.4rem">Vous pouvez soutenir le projet en financièrement en envoyant des bitcoins à l'adresse suivante :</p>
+    <div class="btc-box">
+      <code id="btcAddr">bc1qyjq5zww3v39wzrxvk77qch8hdge0yn9ch5nt0u</code>
+      <button type="button" class="btn btn-ghost" id="copyBtc" style="padding:.55rem 1.2rem;font-size:.85rem">Copier</button>
+    </div>
     <div class="nl-msg" id="nlMsg"></div>
   </div>
 </div></section>
@@ -369,14 +373,19 @@ const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-document.getElementById('nlForm').addEventListener('submit',e=>{
-  e.preventDefault();
-  const email=document.getElementById('nlEmail').value.trim();
-  const ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+document.getElementById('copyBtc').addEventListener('click',()=>{
+  const addr=document.getElementById('btcAddr').textContent.trim();
   const msg=document.getElementById('nlMsg');
-  if(ok){msg.textContent='Vous êtes sur la boucle ✓ — merci pour votre soutien.';document.getElementById('nlEmail').value='';}
-  else{msg.textContent='Adresse invalide — réessayez.';msg.style.color='#e07a5f';setTimeout(()=>msg.style.color='',1500);}
+  const done=()=>{msg.textContent='Adresse copiée ✓ — merci pour votre soutien.';msg.style.color='';};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(addr).then(done).catch(()=>{fallbackCopy(addr);done();});}
+  else{fallbackCopy(addr);done();}
 });
+function fallbackCopy(text){
+  const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(ta);
+}
+
 </script>
 </body>
 </html>

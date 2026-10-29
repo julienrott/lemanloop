@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1760 1120" role="img" aria-label="Approche du wagonnet LémanLoop sur son viaduc vers la gare dôme">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C9D9E6"/>
+      <stop offset="100%" stop-color="#E9F0F3"/>
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7FA9C2"/>
+      <stop offset="100%" stop-color="#A9C9DA"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#16414F"/>
+      <stop offset="38%" stop-color="#3F7D8C"/>
+      <stop offset="62%" stop-color="#16414F"/>
+      <stop offset="100%" stop-color="#2A5B6B"/>
+    </linearGradient>
+    <linearGradient id="girder" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D3D7DA"/>
+      <stop offset="60%" stop-color="#B9BEC2"/>
+      <stop offset="100%" stop-color="#7E858B"/>
+    </linearGradient>
+    <radialGradient id="dome" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#EAF4F2"/>
+      <stop offset="55%" stop-color="#BFD8D4"/>
+      <stop offset="100%" stop-color="#8FB4B0"/>
+    </radialGradient>
+    <filter id="haze" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="soft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.2"/></filter>
+    <clipPath id="frame"><rect width="1760" height="1120"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <!-- SKY -->
+    <rect width="1760" height="620" fill="url(#sky)"/>
+    <g fill="#FFFFFF" opacity=".75" filter="url(#soft)">
+      <ellipse cx="300" cy="120" rx="130" ry="28"/>
+      <ellipse cx="900" cy="80" rx="180" ry="30"/>
+      <ellipse cx="1450" cy="150" rx="150" ry="26"/>
+    </g>
+    <g class="clouds" opacity=".8">
+      <ellipse cx="1750" cy="130" rx="120" ry="22" fill="#fff" opacity=".8" filter="url(#soft)"/>
+      <ellipse cx="1350" cy="190" rx="150" ry="26" fill="#fff" opacity=".6" filter="url(#soft)"/>
+    </g>
+
+    <style>
+      @keyframes drift { from{transform:translateX(0)} to{transform:translateX(-260px)} }
+      .clouds{animation: drift 90s linear infinite}
+      @keyframes glide { 0%{transform:translateX(-520px)} 100%{transform:translateX(880px)} }
+      .pod{animation: glide 14s linear infinite}
+      @keyframes rock { 0%,100%{ transform:rotate(-0.2deg) translateY(0)} 50%{ transform:rotate(0.2deg) translateY(-2px)} }
+      .bodyrock{animation: rock 4.5s ease-in-out infinite; transform-origin:center}
+      @keyframes far { from{transform:translateX(0)} to{transform:translateX(-40px)} }
+      .far{animation: far 60s linear infinite; transform-origin:center}
+      @keyframes near { from{transform:translateX(0)} to{transform:translateX(-160px)} }
+      .near{animation: near 20s linear infinite; transform-origin:center}
+      @keyframes shimmer { 0%,100%{opacity:.25} 50%{opacity:.55} }
+      .shimmer{animation: shimmer 6s ease-in-out infinite}
+    </style>
+    <g class="clouds" opacity=".8">
+      <ellipse cx="1750" cy="130" rx="120" ry="22" fill="#fff" opacity=".8" filter="url(#soft)"/>
+      <ellipse cx="1350" cy="190" rx="150" ry="26" fill="#fff" opacity=".6" filter="url(#soft)"/>
+    </g>
+
+    <!-- DISTANT MOUNTAINS (left, hazy) — slow parallax -->
+    <g class="far" filter="url(#haze)" opacity=".85">
+      <path d="M-30 470 L90 340 L190 425 L280 320 L400 440 L500 380 L610 455 L640 620 L-30 620 Z" fill="#9FB2C2"/>
+      <path d="M-30 520 L120 420 L260 500 L380 415 L520 505 L610 455 L640 620 L-30 620 Z" fill="#B7C6D2"/>
+    </g>
+
+    <!-- LAKE -->
+    <rect y="530" width="1760" height="470" fill="url(#lake)"/>
+    <g class="shimmer" stroke="#DCEAF2" stroke-width="2" opacity=".4">
+      <line x1="80" y1="700" x2="520" y2="700"/>
+      <line x1="620" y1="760" x2="1180" y2="760"/>
+      <line x1="200" y1="820" x2="700" y2="820"/>
+      <line x1="120" y1="880" x2="640" y2="880"/>
+    </g>
+
+    <!-- DOME STATION (right, destination) -->
+    <g>
+      <rect x="1430" y="640" width="330" height="80" fill="#D8D4C4"/>
+      <path d="M1440 640 C1440 470 1500 380 1595 380 C1690 380 1750 470 1750 640 Z" fill="url(#dome)"/>
+      <g stroke="#9FBAB6" stroke-width="3" fill="none" opacity=".7">
+        <path d="M1490 640 C1490 500 1530 420 1595 410"/>
+        <path d="M1540 640 C1548 480 1570 425 1595 408"/>
+        <path d="M1585 640 C1590 470 1594 415 1595 406"/>
+        <path d="M1650 640 C1645 480 1625 425 1595 408"/>
+        <path d="M1700 640 C1700 500 1660 420 1595 410"/>
+        <path d="M1465 520 L1725 520"/><path d="M1452 580 L1738 580"/>
+      </g>
+      <path d="M1470 470 C1480 430 1500 400 1520 390 L1500 470 Z" fill="#FFFFFF" opacity=".55"/>
+      <rect x="1445" y="580" width="300" height="60" fill="#7FA9A4" opacity=".55"/>
+      <rect x="1405" y="586" width="8" height="54" fill="#3E4A50"/>
+      <circle cx="1409" cy="580" r="9" fill="#F2E8C0"/>
+      <rect x="1460" y="700" width="60" height="14" rx="4" fill="#5B5852"/>
+      <rect x="1560" y="700" width="60" height="14" rx="4" fill="#5B5852"/>
+      <path d="M1380 656 L1390 600 L1400 656 Z" fill="#3A5A3C"/>
+      <path d="M1420 658 L1430 592 L1440 658 Z" fill="#3A5A3C"/>
+      <path d="M1360 660 L1368 615 L1376 660 Z" fill="#3A5A3C"/>
+    </g>
+
+    <!-- VIADUCT -->
+    <path d="M1420 740 L1436 800 L1480 960 L1560 960 L1604 800 L1620 740 Z" fill="#AEB4B9"/>
+    <path d="M1420 740 L1620 740 L1612 772 L1428 772 Z" fill="#8F959A"/>
+    <g transform="rotate(-1.2 880 730)">
+      <rect x="-40" y="700" width="1900" height="82" fill="url(#girder)"/>
+      <rect x="-40" y="700" width="1900" height="8" fill="#E4E7E9"/>
+      <rect x="-40" y="782" width="1900" height="22" fill="#666D73"/>
+      <rect x="-40" y="796" width="1900" height="10" fill="#565C61"/>
+    </g>
+    <g class="pod" opacity=".22">
+      <ellipse cx="660" cy="806" rx="300" ry="12" fill="#2B3340"/>
+    </g>
+
+    <!-- POD -->
+    <g class="pod">
+      <g transform="translate(660 596) scale(1.25)">
+        <g class="bodyrock">
+          <ellipse cx="0" cy="86" rx="300" ry="14" fill="#2B3340" opacity=".22"/>
+          <path d="M -300 58 C -310 20 -280 -6 -220 -16 L 170 -16 C 250 -10 296 16 306 44 C 312 62 304 70 270 72 L -270 74 C -296 72 -306 68 -300 58 Z" fill="#F4F2EA"/>
+          <path d="M -160 -16 C -140 -38 -60 -44 40 -42 C 120 -40 160 -32 168 -18 L -160 -16 Z" fill="#E9E1CC"/>
+          <path d="M -248 -10 C -240 -30 -180 -40 -90 -40 L 90 -40 C 170 -34 220 -18 236 4 L 220 10 L -236 10 Z" fill="url(#glass)"/>
+          <path d="M -180 -34 L -60 -34 L -120 6 L -200 6 Z" fill="#CFE4EA" opacity=".28"/>
+          <g fill="#0E2230" opacity=".85">
+            <circle cx="60" cy="-16" r="10"/><rect x="50" y="-10" width="22" height="26" rx="9"/>
+            <circle cx="0" cy="-14" r="10"/><rect x="-10" y="-8" width="22" height="26" rx="9"/>
+            <circle cx="-58" cy="-15" r="10"/><rect x="-70" y="-9" width="23" height="27" rx="9"/>
+          </g>
+          <path d="M -290 46 L 300 46 L 296 70 L -282 72 C -300 70 -298 60 -290 46 Z" fill="#F4F2EA"/>
+          <path d="M -290 60 L 298 60 L 297 69 L -286 72 Z" fill="#2A2D31"/>
+          <ellipse cx="-262" cy="-8" rx="9" ry="20" fill="#FFFFFF" opacity=".7"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- FOREGROUND -->
+    <g class="near">
+      <ellipse cx="140" cy="1010" rx="230" ry="150" fill="#4F7042"/>
+      <ellipse cx="420" cy="1060" rx="250" ry="150" fill="#6F8F56"/>
+      <ellipse cx="700" cy="1080" rx="210" ry="120" fill="#5F834D"/>
+      <ellipse cx="1180" cy="1100" rx="260" ry="120" fill="#4F7042"/>
+      <rect x="1010" y="1000" width="320" height="58" rx="8" fill="#9C9A90"/>
+      <rect x="1010" y="980" width="320" height="34" rx="6" fill="#54735F"/>
+      <g fill="#C96F8E">
+        <circle cx="1050" cy="978" r="7"/><circle cx="1110" cy="982" r="7"/><circle cx="1170" cy="976" r="7"/><circle cx="1230" cy="984" r="7"/><circle cx="1290" cy="978" r="7"/>
+      </g>
+      <path d="M 980 1120 L 1160 990 L 1760 1030 L 1760 1120 Z" fill="#CFC4AE"/>
+      <rect x="1470" y="986" width="66" height="16" rx="4" fill="#5B5852"/>
+      <rect x="1600" y="986" width="66" height="16" rx="4" fill="#5B5852"/>
+      <rect x="1176" y="1014" width="28" height="40" rx="4" fill="#2A3A44"/>
+    </g>
+    <rect y="1040" width="1760" height="80" fill="#54735F"/>
+  </g>
+</svg>
