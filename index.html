@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LémanLoop — Le maglev suspendu autour du Léman</title>
+<meta name="description" content="LémanLoop : le réseau de maglev suspendu panoramique autour du lac Léman. Genève, Lausanne, Montreux, Évian, Thonon. Silencieux, zéro émission, vue spectaculaire.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lake-deep:#03242e; --lake:#0b486b; --lagoon:#2a9d8f; --eco:#5fb760;
+  --ink:#eaf4f5; --ink-dim:#9db8be; --glass:rgba(255,255,255,.06);
+  --glass-border:rgba(255,255,255,.14); --silver:#c8d6d9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--lake-deep);color:var(--ink);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,.brand{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{width:min(1100px,92%);margin:0 auto}
+.kicker{font-size:.75rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--lagoon)}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;transition:background .3s,backdrop-filter .3s}
+nav.scrolled{background:rgba(3,36,46,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700;font-size:1.15rem;display:flex;align-items:center;gap:.5rem}
+.brand svg{width:28px;height:28px}
+.nav-links{display:none;gap:2rem;font-size:.9rem;color:var(--ink-dim)}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.6rem;border-radius:999px;font-weight:600;font-size:.95rem;transition:transform .2s,box-shadow .2s;cursor:pointer;border:none}
+.btn-primary{background:linear-gradient(135deg,var(--lagoon),#1f7d8c);color:#fff;box-shadow:0 4px 24px rgba(42,157,143,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(42,157,143,.5)}
+.btn-ghost{background:var(--glass);border:1px solid var(--glass-border);color:var(--ink);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+@media(min-width:768px){.nav-links{display:flex}}
+/* HERO */
+.hero{min-height:100svh;position:relative;display:flex;align-items:center;justify-content:center;text-align:center}
+.hero-bg{position:absolute;inset:0;background:url('assets/hero.jpg') center/cover no-repeat}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,36,46,.55) 0%,rgba(3,36,46,.25) 40%,var(--lake-deep) 100%)}
+.hero-content{position:relative;z-index:2;padding:7rem 1.25rem 4rem;max-width:820px}
+.hero h1{font-size:clamp(2.4rem,7vw,4.5rem);line-height:1.08;font-weight:700;margin:1.2rem 0}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--lagoon),#8fd3c8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.sub{font-size:clamp(1rem,2.2vw,1.25rem);color:var(--ink-dim);max-width:560px;margin:0 auto 2.2rem}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.6rem;padding:.45rem 1rem;border-radius:999px;background:var(--glass);border:1px solid var(--glass-border);font-size:.8rem;color:var(--silver);backdrop-filter:blur(8px)}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--eco);box-shadow:0 0 10px var(--eco)}
+/* SECTIONS */
+section{padding:6rem 0}
+.section-head{max-width:640px;margin-bottom:3.5rem}
+.section-head h2{font-size:clamp(1.7rem,4vw,2.6rem);margin:.8rem 0;line-height:1.15}
+.section-head p{color:var(--ink-dim)}
+/* FEATURES — staggered, not equal tiles */
+.features{display:grid;gap:1.25rem}
+@media(min-width:768px){.features{grid-template-columns:repeat(12,1fr)}
+.f-card:nth-child(1){grid-column:1/span 7}.f-card:nth-child(2){grid-column:8/span 5}
+.f-card:nth-child(3){grid-column:1/span 5}.f-card:nth-child(4){grid-column:6/span 7}}
+.f-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:1.25rem;padding:2rem;backdrop-filter:blur(12px);transition:transform .25s,border-color .25s}
+.f-card:hover{transform:translateY(-4px);border-color:rgba(42,157,143,.5)}
+.f-card .num{font-family:'Space Grotesk';font-size:.8rem;color:var(--lagoon);letter-spacing:.15em}
+.f-card h3{font-size:1.25rem;margin:.6rem 0 .5rem}
+.f-card p{color:var(--ink-dim);font-size:.95rem}
+.f-card .stat{margin-top:1rem;font-family:'Space Grotesk';font-weight:600;font-size:1.05rem;color:var(--eco)}
+/* MAP */
+.map-panel{background:var(--glass);border:1px solid var(--glass-border);border-radius:1.5rem;overflow:hidden;backdrop-filter:blur(12px)}
+.map-visual{position:relative}
+.map-visual svg{display:block;width:100%;height:auto}
+.pod-glow{filter:drop-shadow(0 0 4px #8fd3c8)}
+@keyframes dash{to{stroke-dashoffset:0}}
+.trace-path{stroke-dasharray:1;stroke-dashoffset:1;stroke-dasharray:4000;stroke-dashoffset:4000;animation:dash 4s ease-out .5s forwards}
+@media(prefers-reduced-motion:reduce){.trace-path{animation:none;stroke-dashoffset:0}}
+.map-legend{display:flex;flex-wrap:wrap;gap:1.5rem;padding:1.25rem 1.5rem;border-top:1px solid var(--glass-border);font-size:.85rem;color:var(--ink-dim)}
+.map-legend b{color:var(--ink);font-family:'Space Grotesk'}
+/* SPLIT — experience */
+.split{display:grid;gap:2.5rem;align-items:center}
+@media(min-width:900px){.split{grid-template-columns:1.05fr .95fr;gap:4rem}}
+.split .img-frame{border-radius:1.5rem;overflow:hidden;border:1px solid var(--glass-border);position:relative;aspect-ratio:4/3}
+.split .img-frame img{width:100%;height:100%;object-fit:cover}
+.split .img-fallback{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 40%,#0d5a70,#03242e);display:flex;align-items:center;justify-content:center;color:var(--ink-dim);font-size:.85rem}
+.xp-list{display:grid;gap:1.1rem;margin-top:1.5rem}
+.xp-item{display:flex;gap:1rem;align-items:baseline}
+.xp-item .val{font-family:'Space Grotesk';font-weight:700;font-size:1.35rem;color:var(--lagoon);min-width:5.5rem}
+.xp-item p{color:var(--ink-dim);font-size:.95rem}
+/* TIMELINE strip */
+.route-strip{margin-top:3.5rem;display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+.chip{padding:.5rem 1.1rem;border-radius:999px;background:var(--glass);border:1px solid var(--glass-border);font-size:.85rem;color:var(--silver)}
+.chip b{color:var(--lagoon);font-family:'Space Grotesk';font-size:.75rem;margin-right:.35rem}
+/* FINAL CTA */
+.final{position:relative;overflow:hidden}
+.final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 70% 20%,rgba(42,157,143,.22),transparent 70%);pointer-events:none}
+.newsletter{position:relative;background:var(--glass);border:1px solid var(--glass-border);border-radius:1.5rem;padding:2.5rem 1.5rem;text-align:center;backdrop-filter:blur(12px)}
+@media(min-width:640px){.newsletter{padding:3.5rem}}
+.newsletter h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:.7rem}
+.newsletter p{color:var(--ink-dim);margin-bottom:2rem}
+.nl-form{display:flex;flex-direction:column;gap:.75rem;max-width:480px;margin:0 auto}
+@media(min-width:560px){.nl-form{flex-direction:row}}
+.nl-form input{flex:1;padding:.9rem 1.3rem;border-radius:999px;border:1px solid var(--glass-border);background:rgba(3,36,46,.6);color:var(--ink);font-size:.95rem;outline:none;min-width:0}
+.nl-form input:focus{border-color:var(--lagoon);box-shadow:0 0 0 3px rgba(42,157,143,.25)}
+.nl-msg{margin-top:1rem;font-size:.85rem;color:var(--eco);min-height:1.2em}
+/* FOOTER */
+footer{border-top:1px solid var(--glass-border);padding:2.5rem 0;font-size:.85rem;color:var(--ink-dim)}
+.foot-inner{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:center}
+.foot-links{display:flex;gap:1.5rem}
+.foot-links a:hover{color:var(--ink)}
+/* TIMETABLE */
+.timetable{display:grid;gap:.5rem;background:var(--glass);border:1px solid var(--glass-border);border-radius:1.5rem;padding:1.5rem;backdrop-filter:blur(12px)}
+.tt-row{display:grid;grid-template-columns:1.6fr .8fr .8fr 1fr 1.6fr;gap:.75rem;align-items:center;padding:.7rem 1rem;border-radius:.75rem;font-size:.92rem}
+.tt-row:nth-child(odd){background:rgba(255,255,255,.03)}
+.tt-head{font-family:'Space Grotesk';font-weight:600;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lagoon)}
+.tt-time{font-family:'Space Grotesk';font-weight:700;color:var(--eco);font-size:1rem}
+.tt-total{border-top:1px solid var(--glass-border);margin-top:.5rem;padding-top:1rem}
+.tt-total .tt-time{color:#fff}
+@media(max-width:720px){
+  .tt-row{grid-template-columns:1.4fr .7fr .9fr}
+  .tt-row>span:nth-child(3),.tt-row>span:nth-child(5){display:none}
+  .tt-head>span:nth-child(3),.tt-head>span:nth-child(5){display:none}
+}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.comet{animation:none}.pod{animation:none}}
+</style>
+</head>
+<body>
+<nav id="nav"><div class="container nav-inner">
+  <a href="#" class="brand">
+    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#2a9d8f" stroke-width="2.5"/><rect x="9" y="6" width="5" height="9" rx="2.5" fill="#8fd3c8"/><circle cx="16" cy="16" r="3.5" fill="#5fb760"/></svg>
+    LémanLoop
+  </a>
+  <div class="nav-links">
+    <a href="#concept">Concept</a><a href="#trace">Le tracé</a><a href="#experience">Expérience</a>
+  </div>
+  <a href="#inscription" class="btn btn-ghost" style="padding:.55rem 1.2rem;font-size:.85rem">Soutenir le projet</a>
+</div></nav>
+
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-badge"><span class="dot"></span> Projet d'infrastructure — Léman franco-suisse</span>
+    <h1>Le futur a rendez-vous <em>avec le Léman</em></h1>
+    <p class="sub">Un maglev suspendu à un monorail silencieux, des wagonnets panoramiques de 10 à 20 places, et un tour complet du lac : Genève, Lausanne, Montreux, Évian, Thonon. Sans une seule émission.</p>
+    <div class="hero-ctas">
+      <a href="#trace" class="btn btn-primary">Découvrir le tracé</a>
+      <a href="#inscription" class="btn btn-ghost">Soutenir le projet</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="concept"><div class="container">
+  <div class="section-head reveal">
+    <span class="kicker">Le concept</span>
+    <h2>La précision suisse, portée par l'aimant</h2>
+    <p>LémanLoop n'est ni un train, ni un téléphérique. C'est un tiers mode de transport : une sustentation magnétique suspendue sous un monorail fin, pensée pour épouser les rives du lac.</p>
+  </div>
+  <div class="features">
+    <div class="f-card reveal"><span class="num">01 — VITESSE</span>
+      <h3>Le flux continu à haute vitesse</h3>
+      <p>Sur la ligne principale, les wagonnets ne s'arrêtent jamais : ils filent en boucle fermée à 200–250 km/h, sans friction ni arrêt imposé. Le flux ne ralentit jamais — ni pour embarquer, ni pour stationner.</p>
+      <div class="stat">Croisière : jusqu'à 250 km/h</div></div>
+    <div class="f-card reveal"><span class="num">02 — ÉCOLOGIE</span>
+      <h3>Zéro émission, zéro emprise au sol</h3>
+      <p>Le rail est posé sur une poutre fine qui surplombera rives et vignes, sans couper les habitats ni consommer de terres agricoles. Motorisation 100 % électrique, alimentée en énergie renouvelable.</p>
+      <div class="stat">0 g CO₂ / passager·km</div></div>
+    <div class="f-card reveal"><span class="num">03 — TECHNOLOGIE</span>
+      <h3>Le système « hors-ligne » des stations</h3>
+      <p>Chaque station possède une voie de dérivation : le wagonnet quitte la ligne principale pour s'immobiliser en douceur à quai pendant que le flux file à pleine vitesse au-dessus. Réinsertion autonome et synchronisée par IA sur la ligne — zéro arrêt intermédiaire obligatoire.</p>
+      <div class="stat">Bypass en station, flux jamais interrompu</div></div>
+    <div class="f-card reveal"><span class="num">04 — EXPÉRIENCE</span>
+      <h3>Des wagonnets intimistes et panoramiques</h3>
+      <p>Dix à vingt voyageurs seulement, assis face au lac. Vitres en verre courbe du sol au plafond : plus un moyen de transport, un belvédère mobile sur les Alpes.</p>
+      <div class="stat">180° de vue sur l'eau</div></div>
+  </div>
+</div></section>
+
+<section id="trace"><div class="container">
+  <div class="section-head reveal">
+    <span class="kicker">Le tracé</span>
+    <h2>Une boucle, huit rives, un seul tour du lac</h2>
+    <p>Le LémanLoop enlace le lac en continu, des deux côtés de la frontière. Ci-dessous, la géographie du tracé — carte de principe, tracé définitif à l'étude.</p>
+  </div>
+  <div class="map-panel reveal">
+    <div class="map-visual"><svg viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Carte animée du tracé LémanLoop autour du lac Léman">
+  <defs>
+    <radialGradient id="lakeG" cx="45%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#1d7ea0"/>
+      <stop offset="70%" stop-color="#0d4a63"/>
+      <stop offset="100%" stop-color="#0a3a50"/>
+    </radialGradient>
+    <radialGradient id="bgG" cx="50%" cy="45%" r="80%">
+      <stop offset="0%" stop-color="#0d5a70"/>
+      <stop offset="60%" stop-color="#073542"/>
+      <stop offset="100%" stop-color="#03242e"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Styles intégrés pour l'animation des stations -->
+  <style>
+    .stn-pulse {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.8); stroke-width: 2; stroke-opacity: 0.8; }
+      100% { transform: scale(2.5); stroke-width: 0; stroke-opacity: 0; }
+    }
+  </style>
+
+  <rect width="1000" height="620" fill="url(#bgG)"/>
+  
+  <g fill="#8fb6be" opacity=".18">
+    <circle cx="795" cy="140" r="3"/><circle cx="850" cy="205" r="2.5"/><circle cx="150" cy="500" r="3"/>
+    <circle cx="105" cy="430" r="2.5"/><circle cx="890" cy="115" r="2"/><circle cx="760" cy="490" r="2.5"/>
+  </g>
+  
+  <!-- Nouveau tracé ultra-lisse (Courbes de Bézier parfaitement tangentes) -->
+  <path id="lakeShape" 
+        d="M 123,526 
+           C 130,450 160,350 213,283 
+           C 266,216 384,99 484,99 
+           C 584,99 647,110 717,140 
+           C 787,170 850,200 879,241 
+           C 908,282 708,270 508,262 
+           C 408,258 380,300 340,334 
+           C 300,368 180,500 123,526 Z" 
+        fill="url(#lakeG)" stroke="#8fd3c8" stroke-opacity=".45" stroke-width="2"/>
+
+  <!-- Wagonnet animé LémanLoop -->
+  <g>
+    <!-- Halo lumineux autour du wagonnet -->
+    <rect x="-14" y="-6" width="28" height="12" rx="6" fill="#8fd3c8" opacity="0.6"/>
+    <!-- Corps de la cabine -->
+    <rect x="-10" y="-4" width="20" height="8" rx="4" fill="#ffffff"/>
+    <!-- Vitre panoramique -->
+    <rect x="-5" y="-2" width="10" height="4" rx="2" fill="#0d4a63"/>
+    
+    <!-- Animation : dur="20s" (Vitesse fluide) -->
+    <animateMotion dur="20s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#lakeShape"/>
+    </animateMotion>
+  </g>
+
+  <!-- Genève -->
+  <g>
+    <circle cx="123" cy="526" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="123" cy="526" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="105" y="520" text-anchor="end" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Genève</text>
+  </g>
+
+  <!-- Nyon -->
+  <g>
+    <circle cx="213" cy="283" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="213" cy="283" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="195" y="278" text-anchor="end" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Nyon</text>
+  </g>
+
+  <!-- Lausanne -->
+  <g>
+    <circle cx="484" cy="99" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="484" cy="99" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="484" y="75" text-anchor="middle" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Lausanne</text>
+  </g>
+
+  <!-- Vevey -->
+  <g>
+    <circle cx="717" cy="140" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="717" cy="140" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="717" y="115" text-anchor="middle" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Vevey</text>
+  </g>
+
+  <!-- Montreux -->
+  <g>
+    <circle cx="879" cy="241" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="879" cy="241" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="895" y="246" text-anchor="start" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Montreux</text>
+  </g>
+
+  <!-- Thonon (France) -->
+  <g>
+    <circle cx="340" cy="334" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="340" cy="334" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="340" y="362" text-anchor="middle" font-size="17" font-weight="600" fill="#d9b49a" font-family="Space Grotesk,Inter,sans-serif">Thonon</text>
+  </g>
+
+  <!-- Évian (France) -->
+  <g>
+    <circle cx="508" cy="262" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="508" cy="262" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="508" y="290" text-anchor="middle" font-size="17" font-weight="600" fill="#d9b49a" font-family="Space Grotesk,Inter,sans-serif">Évian</text>
+  </g>
+</svg></div>
+    <div class="map-legend">
+      <span><b>7 stations</b> sur la boucle de première phase</span>
+      <span><b>~140 km</b> de monorail en boucle fermée</span>
+      <span><b>2 rives</b> — suisse et française — reliées en continu</span>
+    </div>
+  </div>
+  <div class="route-strip reveal">
+    <span class="chip"><b>0:00</b>Genève</span><span class="chip"><b>0:08</b>Nyon</span>
+    <span class="chip"><b>0:19</b>Lausanne</span><span class="chip"><b>0:26</b>Vevey</span>
+    <span class="chip"><b>0:28</b>Montreux</span><span class="chip"><b>0:37</b>Évian</span>
+    <span class="chip"><b>0:42</b>Thonon</span><span class="chip"><b>0:54</b>retour Genève — 1h10 le tour complet</span>
+  </div>
+</div></section>
+
+<section id="temps-de-parcours"><div class="container">
+  <div class="section-head reveal">
+    <span class="kicker">Temps de parcours</span>
+    <h2>Tour complet du lac en 1h10 — à la deuxième</h2>
+    <p>Grâce au système hors-ligne (aucun arrêt intermédiaire obligatoire sur la ligne principale) et à la vitesse de croisière du maglev, voici les temps estimés entre chaque station.</p>
+  </div>
+  <div class="timetable reveal">
+    <div class="tt-row tt-head">
+      <span>Tronçon</span><span>Distance</span><span>Croisière</span><span>Temps LémanLoop</span><span>Comparatif actuel</span>
+    </div>
+    <div class="tt-row"><span>Genève ➔ Nyon</span><span>~25 km</span><span>200 km/h</span><span class="tt-time">8 min</span><span>2× plus rapide que le train</span></div>
+    <div class="tt-row"><span>Nyon ➔ Lausanne</span><span>~35 km</span><span>250 km/h</span><span class="tt-time">11 min</span><span>Fluide, sans bouchon routier</span></div>
+    <div class="tt-row"><span>Lausanne ➔ Vevey</span><span>~20 km</span><span>200 km/h</span><span class="tt-time">7 min</span><span>Traversée panoramique directe</span></div>
+    <div class="tt-row"><span>Vevey ➔ Montreux</span><span>~5 km</span><span>150 km/h</span><span class="tt-time">2 min</span><span>Alternative instantanée au tram</span></div>
+    <div class="tt-row"><span>Montreux ➔ Évian</span><span>~25 km</span><span>200 km/h</span><span class="tt-time">9 min</span><span>Évite le long détour routier</span></div>
+    <div class="tt-row"><span>Évian ➔ Thonon</span><span>~15 km</span><span>180 km/h</span><span class="tt-time">5 min</span><span>Liaison locale ultra-rapide</span></div>
+    <div class="tt-row"><span>Thonon ➔ Genève</span><span>~35 km</span><span>200 km/h</span><span class="tt-time">12 min</span><span>Frontière traversée en silence</span></div>
+    <div class="tt-row tt-total"><span>Tour complet (7 stations)</span><span>~140 km</span><span>Variable</span><span class="tt-time">≈ 1h10</span><span>Le tour du lac en un temps record</span></div>
+  </div>
+</div></section>
+
+<section id="experience"><div class="container">
+  <div class="split">
+    <div class="reveal">
+      <span class="kicker">L'expérience passager</span>
+      <h2 style="font-size:clamp(1.7rem,4vw,2.6rem);margin:.8rem 0 1rem;line-height:1.15">Un salon roulant face aux Alpes</h2>
+      <p style="color:var(--ink-dim)">Chaque wagonnet est une pièce de verre suspendue : dix à vingt voyageurs, aucune cloison, un horizon sans fin. On monte, on s'assoit face au lac, et la rive défile en silence.</p>
+      <div class="xp-list">
+        <div class="xp-item"><span class="val">10–20</span><p>voyageurs par wagonnet : l'échelle du tramway intimiste, jamais celle du train de banlieue.</p></div>
+        <div class="xp-item"><span class="val">2 min</span><p>départs toutes les deux minutes aux heures de pointe. On n'attend pas le LémanLoop : il est déjà là.</p></div>
+        <div class="xp-item"><span class="val">0 dB</span><p>aucun moteur à bord, aucun frottement : la seule chose qu'on entend, c'est le lac.</p></div>
+      </div>
+    </div>
+    <div class="img-frame reveal" style="aspect-ratio:3/4"><img src="assets/concept.jpg" alt="Wagonnet panoramique LémanLoop au-dessus du lac" onerror="this.parentNode.querySelector('.img-fallback').style.display='flex';this.remove();"><div class="img-fallback" style="display:none">Visuel de la cabine panoramique</div></div>
+  </div>
+</div></section>
+
+<section id="inscription" class="final"><div class="container">
+  <div class="newsletter reveal">
+    <h2>Rejoignez la révolution de la mobilité lémanique</h2>
+    <p>Citoyen·ne, élu·e, ingénieur·e ou curieux : la première boucle d'infrastructure se construit d'abord autour d'une communauté. Recevez l'avancement du projet, les études et les événements publics.</p>
+    <form class="nl-form" id="nlForm">
+      <input type="email" id="nlEmail" placeholder="prenom@exemple.ch" aria-label="Adresse email" required>
+      <button type="submit" class="btn btn-primary">S'inscrire</button>
+    </form>
+    <div class="nl-msg" id="nlMsg"></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="container foot-inner">
+  <span class="brand" style="font-size:1rem">LémanLoop</span>
+  <div class="foot-links">
+    <a href="#">Mentions légales</a><a href="#">Presse</a><a href="#">Contact</a>
+  </div>
+  <span>© 2026 LémanLoop — projet d'étude franco-suisse</span>
+</div></footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.getElementById('nlForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const email=document.getElementById('nlEmail').value.trim();
+  const ok=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+  const msg=document.getElementById('nlMsg');
+  if(ok){msg.textContent='Vous êtes sur la boucle ✓ — merci pour votre soutien.';document.getElementById('nlEmail').value='';}
+  else{msg.textContent='Adresse invalide — réessayez.';msg.style.color='#e07a5f';setTimeout(()=>msg.style.color='',1500);}
+});
+</script>
+</body>
+</html>

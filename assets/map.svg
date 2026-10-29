@@ -1,0 +1,110 @@
+<svg viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Carte animée du tracé LémanLoop autour du lac Léman">
+  <defs>
+    <radialGradient id="lakeG" cx="45%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#1d7ea0"/>
+      <stop offset="70%" stop-color="#0d4a63"/>
+      <stop offset="100%" stop-color="#0a3a50"/>
+    </radialGradient>
+    <radialGradient id="bgG" cx="50%" cy="45%" r="80%">
+      <stop offset="0%" stop-color="#0d5a70"/>
+      <stop offset="60%" stop-color="#073542"/>
+      <stop offset="100%" stop-color="#03242e"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Styles intégrés pour l'animation des stations -->
+  <style>
+    .stn-pulse {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.8); stroke-width: 2; stroke-opacity: 0.8; }
+      100% { transform: scale(2.5); stroke-width: 0; stroke-opacity: 0; }
+    }
+  </style>
+
+  <rect width="1000" height="620" fill="url(#bgG)"/>
+  
+  <g fill="#8fb6be" opacity=".18">
+    <circle cx="795" cy="140" r="3"/><circle cx="850" cy="205" r="2.5"/><circle cx="150" cy="500" r="3"/>
+    <circle cx="105" cy="430" r="2.5"/><circle cx="890" cy="115" r="2"/><circle cx="760" cy="490" r="2.5"/>
+  </g>
+  
+  <!-- Nouveau tracé ultra-lisse (Courbes de Bézier parfaitement tangentes) -->
+  <path id="lakeShape" 
+        d="M 123,526 
+           C 130,450 160,350 213,283 
+           C 266,216 384,99 484,99 
+           C 584,99 647,110 717,140 
+           C 787,170 850,200 879,241 
+           C 908,282 708,270 508,262 
+           C 408,258 380,300 340,334 
+           C 300,368 180,500 123,526 Z" 
+        fill="url(#lakeG)" stroke="#8fd3c8" stroke-opacity=".45" stroke-width="2"/>
+
+  <!-- Wagonnet animé LémanLoop -->
+  <g>
+    <!-- Halo lumineux autour du wagonnet -->
+    <rect x="-14" y="-6" width="28" height="12" rx="6" fill="#8fd3c8" opacity="0.6"/>
+    <!-- Corps de la cabine -->
+    <rect x="-10" y="-4" width="20" height="8" rx="4" fill="#ffffff"/>
+    <!-- Vitre panoramique -->
+    <rect x="-5" y="-2" width="10" height="4" rx="2" fill="#0d4a63"/>
+    
+    <!-- Animation : dur="20s" (Vitesse fluide) -->
+    <animateMotion dur="20s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#lakeShape"/>
+    </animateMotion>
+  </g>
+
+  <!-- Genève -->
+  <g>
+    <circle cx="123" cy="526" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="123" cy="526" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="105" y="520" text-anchor="end" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Genève</text>
+  </g>
+
+  <!-- Nyon -->
+  <g>
+    <circle cx="213" cy="283" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="213" cy="283" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="195" y="278" text-anchor="end" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Nyon</text>
+  </g>
+
+  <!-- Lausanne -->
+  <g>
+    <circle cx="484" cy="99" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="484" cy="99" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="484" y="75" text-anchor="middle" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Lausanne</text>
+  </g>
+
+  <!-- Vevey -->
+  <g>
+    <circle cx="717" cy="140" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="717" cy="140" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="717" y="115" text-anchor="middle" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Vevey</text>
+  </g>
+
+  <!-- Montreux -->
+  <g>
+    <circle cx="879" cy="241" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="879" cy="241" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="895" y="246" text-anchor="start" font-size="17" font-weight="600" fill="#c8d6d9" font-family="Space Grotesk,Inter,sans-serif">Montreux</text>
+  </g>
+
+  <!-- Thonon (France) -->
+  <g>
+    <circle cx="340" cy="334" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="340" cy="334" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="340" y="362" text-anchor="middle" font-size="17" font-weight="600" fill="#d9b49a" font-family="Space Grotesk,Inter,sans-serif">Thonon</text>
+  </g>
+
+  <!-- Évian (France) -->
+  <g>
+    <circle cx="508" cy="262" r="7" fill="#5fb760"/>
+    <circle class="stn-pulse" cx="508" cy="262" r="12" fill="none" stroke="#5fb760" stroke-opacity=".35"/>
+    <text x="508" y="290" text-anchor="middle" font-size="17" font-weight="600" fill="#d9b49a" font-family="Space Grotesk,Inter,sans-serif">Évian</text>
+  </g>
+</svg>
